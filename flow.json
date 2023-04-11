@@ -1,1 +1,400 @@
-[]
+[
+    {
+        "id": "408ea47b16d853b9",
+        "type": "tab",
+        "label": "Поток 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e95f5e0cd62c96e8",
+        "type": "mongodb-aleph-config",
+        "hostname": "atlascluster.98z0rsr.mongodb.net",
+        "topology": "dnscluster",
+        "connectOptions": "",
+        "port": "27017",
+        "db": "test",
+        "name": "myMongoDB"
+    },
+    {
+        "id": "fdb0582bfda18a43",
+        "type": "inject",
+        "z": "408ea47b16d853b9",
+        "name": "myNumber",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "25",
+        "payloadType": "num",
+        "x": 140,
+        "y": 120,
+        "wires": [
+            [
+                "8e1f02cdff575003"
+            ]
+        ]
+    },
+    {
+        "id": "4785c8d675ed98cb",
+        "type": "debug",
+        "z": "408ea47b16d853b9",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 710,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "8e1f02cdff575003",
+        "type": "function",
+        "z": "408ea47b16d853b9",
+        "name": "multi x3",
+        "func": "msg.payload = msg.payload * 3\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 120,
+        "wires": [
+            [
+                "4785c8d675ed98cb"
+            ]
+        ]
+    },
+    {
+        "id": "5753ad0ef003f1ee",
+        "type": "inject",
+        "z": "408ea47b16d853b9",
+        "name": "startGetItems req",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 120,
+        "y": 260,
+        "wires": [
+            [
+                "524bab9f3a21b37c"
+            ]
+        ]
+    },
+    {
+        "id": "524bab9f3a21b37c",
+        "type": "http request",
+        "z": "408ea47b16d853b9",
+        "name": "get items req",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.multifactor.ru/users/count",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 330,
+        "y": 260,
+        "wires": [
+            [
+                "010782f0289b155d",
+                "6dd400242bda7d3d"
+            ]
+        ],
+        "info": "awd\r\n"
+    },
+    {
+        "id": "011be69fd7070a8d",
+        "type": "debug",
+        "z": "408ea47b16d853b9",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "010782f0289b155d",
+        "type": "json",
+        "z": "408ea47b16d853b9",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 490,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f1f984a1dff74fd2",
+        "type": "join",
+        "z": "408ea47b16d853b9",
+        "name": "",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": "false",
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "x": 310,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6dd400242bda7d3d",
+        "type": "http request",
+        "z": "408ea47b16d853b9",
+        "name": "save items req",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://mongodb+srv://vladislav:1234qwer@atlascluster.98z0rsr.mongodb.net/test",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 480,
+        "y": 200,
+        "wires": [
+            [
+                "de469552ed1b7184"
+            ]
+        ]
+    },
+    {
+        "id": "8be3a71ad71e3c9f",
+        "type": "debug",
+        "z": "408ea47b16d853b9",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "6742889cc49b180d",
+        "type": "mongodb-aleph-out",
+        "z": "408ea47b16d853b9",
+        "mongodb": "e95f5e0cd62c96e8",
+        "name": "",
+        "collection": "todos",
+        "payonly": false,
+        "upsert": false,
+        "multi": false,
+        "operation": "insert",
+        "x": 690,
+        "y": 520,
+        "wires": [
+            [
+                "948db79d7707b594"
+            ]
+        ]
+    },
+    {
+        "id": "de469552ed1b7184",
+        "type": "function",
+        "z": "408ea47b16d853b9",
+        "name": "function 1",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 180,
+        "wires": [
+            [
+                "8be3a71ad71e3c9f"
+            ]
+        ]
+    },
+    {
+        "id": "42e35b256fd1eb7d",
+        "type": "inject",
+        "z": "408ea47b16d853b9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 90,
+        "y": 520,
+        "wires": [
+            [
+                "893d2d662c9eeeb2"
+            ]
+        ]
+    },
+    {
+        "id": "893d2d662c9eeeb2",
+        "type": "function",
+        "z": "408ea47b16d853b9",
+        "name": "function 2",
+        "func": "let newMsg = msg.payload = {name: \"Maksim\", descr: \"srabotalo !\"}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 520,
+        "wires": [
+            [
+                "6742889cc49b180d"
+            ]
+        ]
+    },
+    {
+        "id": "948db79d7707b594",
+        "type": "debug",
+        "z": "408ea47b16d853b9",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 920,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "3730ad8b8fb7c704",
+        "type": "mongodb-aleph-in",
+        "z": "408ea47b16d853b9",
+        "mongodb": "e95f5e0cd62c96e8",
+        "name": "test",
+        "collection": "todos",
+        "operation": "find",
+        "x": 650,
+        "y": 620,
+        "wires": [
+            [
+                "1ce3f9f5c8307cfc"
+            ]
+        ]
+    },
+    {
+        "id": "a5e2cf75255473f9",
+        "type": "inject",
+        "z": "408ea47b16d853b9",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{}",
+        "payloadType": "json",
+        "x": 90,
+        "y": 640,
+        "wires": [
+            [
+                "8a48b94ae731ff41"
+            ]
+        ]
+    },
+    {
+        "id": "8a48b94ae731ff41",
+        "type": "function",
+        "z": "408ea47b16d853b9",
+        "name": "function 3",
+        "func": "var newMsg = { payload: \"123\" };\nreturn newMsg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 640,
+        "wires": [
+            [
+                "3730ad8b8fb7c704"
+            ]
+        ]
+    },
+    {
+        "id": "1ce3f9f5c8307cfc",
+        "type": "debug",
+        "z": "408ea47b16d853b9",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 620,
+        "wires": []
+    }
+]
